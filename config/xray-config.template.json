@@ -1,0 +1,129 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "port": 38443,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "${CLIENT_UUID_KR}",
+            "flow": "xtls-rprx-vision"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "dest": "learn.microsoft.com:443",
+          "xver": 0,
+          "maxTimediff": 0,
+          "minClientVer": "0.0.0",
+          "maxClientVer": "255.255.255",
+          "serverNames": [
+            "learn.microsoft.com"
+          ],
+          "privateKey": "${REALITY_PRIVATE_KEY}",
+          "shortIds": [
+            "${REALITY_SHORT_ID}",
+            ""
+          ]
+        }
+      },
+      "tag": "in-kr"
+    },
+    {
+      "port": 37443,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "${CLIENT_UUID_JP}",
+            "flow": "xtls-rprx-vision"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "dest": "learn.microsoft.com:443",
+          "xver": 0,
+          "maxTimediff": 0,
+          "minClientVer": "0.0.0",
+          "maxClientVer": "255.255.255",
+          "serverNames": [
+            "learn.microsoft.com"
+          ],
+          "privateKey": "${REALITY_PRIVATE_KEY}",
+          "shortIds": [
+            "${REALITY_SHORT_ID}",
+            ""
+          ]
+        }
+      },
+      "tag": "in-jp"
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 10808,
+            "users": [
+              {
+                "user": "gwuser_kr",
+                "pass": "${SOCKS_PASS_KR}"
+              }
+            ]
+          }
+        ]
+      },
+      "tag": "out-kr"
+    },
+    {
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 10810,
+            "users": [
+              {
+                "user": "gwuser_jp",
+                "pass": "${SOCKS_PASS_JP}"
+              }
+            ]
+          }
+        ]
+      },
+      "tag": "out-jp"
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-kr"
+        ],
+        "outboundTag": "out-kr"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-jp"
+        ],
+        "outboundTag": "out-jp"
+      }
+    ]
+  }
+}

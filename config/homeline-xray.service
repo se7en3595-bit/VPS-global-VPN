@@ -1,0 +1,14 @@
+[Unit]
+Description=Homeline Standalone Xray Service
+After=network.target docker.service
+
+[Service]
+Type=simple
+User=root
+ExecStart=/opt/homeline/xray/xray run -config /opt/homeline/xray/config.json
+Restart=always
+RestartSec=5
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

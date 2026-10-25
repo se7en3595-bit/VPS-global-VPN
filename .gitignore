@@ -1,0 +1,18 @@
+# 敏感配置或私密密钥排除
+*.key
+*.pem
+*.crt
+*.ovpn
+*.db
+*.pcap
+*.zip
+*.tar.gz
+
+# 环境变量与临时文件
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
